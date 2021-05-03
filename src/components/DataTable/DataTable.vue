@@ -6,30 +6,19 @@
 
     <!-- Your component code here -->
     <div class="data-table__container">
-      <div class="data-table__row">
-        <div
-          v-for="column in columns"
-          :key="column.prop"
-          :style="{ 'width': column.width }"
-          class="data-table__column data-table__column_header"
-        >
-          {{ column.label }}
-        </div>
-      </div>
-      <div
+      <data-table-row
+        v-slot="{ column }"
+        :columns="columns"
+        isTableHeader
+      >
+        {{ column.label }}
+      </data-table-row>
+      <data-table-row
         v-for="row in rowsPage"
         :key="row.id"
-        class="data-table__row"
-      >
-        <div
-          v-for="column in columns"
-          :key="column.prop"
-          :style="{ 'width': column.width }"
-          class="data-table__column"
-        >
-          {{ row[column.prop] }}
-        </div>
-      </div>
+        :row="row"
+        :columns="columns"
+      />
     </div>
 
     <div class="data-table__paginator">
@@ -42,9 +31,13 @@
 </template>
 
 <script>
+import DataTableRow from './DataTableRow.vue';
+
 export default {
 
   name: 'DataTable',
+
+  components: { DataTableRow },
 
   props: {
     rows: {
