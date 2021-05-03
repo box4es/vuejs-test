@@ -58,13 +58,19 @@ export default {
 
   computed: {
     pageCount() {
-      return Math.ceil(this.rows.length / this.pageSize);
+      return Math.ceil(this.filteredRows.length / this.pageSize);
+    },
+    filteredRows() {
+      if (Number.isNaN(this.moneyFilter) || this.moneyFilter <= 0) {
+        return this.rows;
+      }
+      return this.rows.filter((row) => row.money <= this.moneyFilter);
     },
     rowsPage() {
       const firstRowIndex = (this.page - 1) * this.pageSize;
       const lastRowIndex = this.page * this.pageSize;
 
-      return this.rows.slice(firstRowIndex, lastRowIndex);
+      return this.filteredRows.slice(firstRowIndex, lastRowIndex);
     },
   },
 };

@@ -18,10 +18,15 @@ export default {
     },
   },
 
-  data() {
-    return {
-      valueInput: '',
-    };
+  computed: {
+    valueInput: {
+      get() {
+        return this.value;
+      },
+      set(newValue) {
+        this.$emit('input', +newValue);
+      },
+    },
   },
 };
 </script>
