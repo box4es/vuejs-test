@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import api from '@/api';
+import getPayments from '@/mocks/getPayments';
 
 Vue.use(Vuex);
 
@@ -32,10 +33,12 @@ export default new Vuex.Store({
       commit('setState', { isLoading: true });
 
       try {
-        const { data } = await api.getPayments(params);
+        const { data } = await getPayments(params);
+        const cached = [...data];
 
-        if (Array.isArray(data)) {
-          commit('setState', { data });
+        if (Array.isArray(cached)) {
+          commit('setState', { data: cached });
+          commit('setState', { isCached: true });
         }
       } catch (e) {
         // eslint-disable-next-line no-alert
@@ -43,6 +46,11 @@ export default new Vuex.Store({
       } finally {
         commit('setState', { isLoading: false });
       }
+    },
+    async clearCache({ commit, dispatch }, params = {}) {
+      commit('setState', { data: [] });
+      commit('setState', { isCached: false });
+      dispatch('load');
     },
   },
 });
