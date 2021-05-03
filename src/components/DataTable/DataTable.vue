@@ -19,6 +19,12 @@
         :row="row"
         :columns="columns"
       />
+      <div
+        v-if="!rowsPage.length"
+        class="data-table__no-data"
+      >
+        No data
+      </div>
     </div>
 
     <div class="data-table__paginator">
@@ -53,8 +59,16 @@ export default {
   data: () => ({
     page: 1,
     pageSize: 4,
-    moneyFilter: 0,
+    moneyFilter: null,
   }),
+
+  watch: {
+    pageCount(pages) {
+      if (pages < 2) {
+        this.page = 1;
+      }
+    },
+  },
 
   computed: {
     pageCount() {
