@@ -1,16 +1,19 @@
 <template>
   <div
+    :class="{ 'data-table__row_header' : isTableHeader }"
     class="data-table__row"
   >
     <div
       v-for="column in columns"
       :key="column.prop"
       :style="{ 'width': column.width }"
-      :class="{ 'data-table__column_header' : isTableHeader }"
       class="data-table__column"
     >
       <slot v-bind="{ column }" >
-        {{ row[column.prop] }}
+        <div class="data-table__label">
+            {{column.label}}
+        </div>
+        {{ filter(row[column.prop], column.prop)}}
       </slot>
     </div>
   </div>
@@ -33,6 +36,18 @@ export default {
     isTableHeader: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    filter(value, type) {
+      if (type === 'date') {
+        return this.$filters.formatDate(value);
+      }
+      if (type === 'money') {
+        return this.$filters.currency(value);
+      }
+
+      return value;
     },
   },
 };
