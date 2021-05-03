@@ -5,6 +5,32 @@
     </div>
 
     <!-- Your component code here -->
+    <div class="data-table__container">
+      <div class="data-table__row">
+        <div
+          v-for="column in columns"
+          :key="column.prop"
+          :style="{ 'width': column.width }"
+          class="data-table__column data-table__column_header"
+        >
+          {{ column.label }}
+        </div>
+      </div>
+      <div
+        v-for="row in rowsPage"
+        :key="row.id"
+        class="data-table__row"
+      >
+        <div
+          v-for="column in columns"
+          :key="column.prop"
+          :style="{ 'width': column.width }"
+          class="data-table__column"
+        >
+          {{ row[column.prop] }}
+        </div>
+      </div>
+    </div>
 
     <div class="data-table__paginator">
       <ui-pagination
@@ -40,6 +66,12 @@ export default {
   computed: {
     pageCount() {
       return Math.ceil(this.rows.length / this.pageSize);
+    },
+    rowsPage() {
+      const firstRowIndex = (this.page - 1) * this.pageSize;
+      const lastRowIndex = this.page * this.pageSize;
+
+      return this.rows.slice(firstRowIndex, lastRowIndex);
     },
   },
 };

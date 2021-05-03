@@ -1,0 +1,23 @@
+.data-table {
+  &__container {
+    margin: 20px 0;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  &__column {
+    width: 25%;
+    padding: 12px;
+    border: 1px solid #000;
+    text-align: center;
+
+    &_header {
+      padding: 3px 12px;
+      font-weight: bold;
+    }
+  }
+  
+}
