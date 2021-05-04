@@ -34,10 +34,9 @@ export default new Vuex.Store({
 
       try {
         const { data } = await getPayments(params);
-        const cached = [...data];
 
-        if (Array.isArray(cached)) {
-          commit('setState', { data: cached });
+        if (Array.isArray(data)) {
+          commit('setState', { data });
           commit('setState', { isCached: true });
         }
       } catch (e) {
