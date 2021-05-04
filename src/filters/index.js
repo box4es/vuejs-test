@@ -3,14 +3,18 @@ import Vue from 'vue';
 const filters = {
   formatDate: (value) => {
     const date = new Date(value);
-    const dateMonth = date.getMonth() + 1;
-    const month = dateMonth < 10
-      ? (`0${dateMonth}`)
-      : dateMonth;
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
 
-    return `${date.getDate()}.${month}.${date.getFullYear()}`;
+    function addLeadingZero(num) {
+      return num < 10
+        ? (`0${num}`)
+        : num;
+    }
+
+    return `${addLeadingZero(day)}.${addLeadingZero(month)}.${date.getFullYear()}`;
   },
-  currency: (money) => money && money.toLocaleString('en-US').replace(',', ' '),
+  currency: (money) => money && money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '),
 };
 
 Object
