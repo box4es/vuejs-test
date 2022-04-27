@@ -1,0 +1,60 @@
+.data-table {
+  $bl: '.data-table';
+
+  &__container {
+    margin: 20px 0;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: nowrap;
+
+    &_header {
+      #{$bl}__column {
+        padding: 3px 12px;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  &__column {
+    width: 25%;
+    padding: 12px;
+    border: 1px solid #6c757d;
+    text-align: center;
+  }
+
+  &__label {
+    display: none;
+    font-weight: bold;
+  }
+
+  &__no-data {
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .data-table {
+    &__row {
+      display: block;
+      margin: 0 0 20px;
+      border: 1px solid #6c757d;
+
+      &_header {
+        display: none;
+      }
+    }
+
+    &__column { 
+      width: 100% !important;
+      border: none;
+      text-align: left;
+    }
+
+    &__label {
+      display: block;
+    }
+  }
+}
